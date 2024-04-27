@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk,createSlice } from '@reduxjs/toolkit';
 
-const apiUrl="http://127.0.0.1:8000";
+const apiUrl="http://127.0.0.1:8000/blog";
 const initialState ={
     posts:[],
     status:'idle',
@@ -33,8 +33,8 @@ const postsSlice= createSlice({
             state.status='failed';
             state.error= action.error.message;
         })
-    }
-})
+    },
+});
 
 export const { setCategoryFilter } = postsSlice.actions;
 export const selectAllPosts = (state)=>state.posts.posts;
