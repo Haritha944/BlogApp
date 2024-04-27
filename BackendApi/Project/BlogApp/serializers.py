@@ -18,11 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserRegSerializer(serializers.Serializer):
     username=serializers.CharField(max_length=100)
-    password= serializers.CharField(max_length=100,write_only=True)
+    password= serializers.CharField(max_length=128,write_only=True)
 
     def create(self,validated_data):
-        user = User.objects.create(
+        user = User.objects.create_user(
             username = validated_data['username'],
-            passsword= validated_data['password']
+            password= validated_data['password']
         )
         return user
