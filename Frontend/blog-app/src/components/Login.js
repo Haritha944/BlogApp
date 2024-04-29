@@ -1,22 +1,47 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { login } from '../features/authentication/authSlice';
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 
 const Login = () => {
   const [username,setUsername]=useState('');
   const [password,setPassword]=useState('');
-  const [check,setCheck] =useState(false)
+  const [check,setCheck] =useState(false);
   const [errMsg,setErrMsg]=useState('');
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch=useDispatch();
-  const handleUsernameInput = (e) =>setUsername(e.target.value);
+  const handleUsernameInput = (e) => setUsername(e.target.value);
   const handlePasswordInput = (e) => setPassword(e.target.value);
   const togglePasswordVisibility = () => {
     setCheck((prevState) => !prevState);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // setLoading(true);
+    try {
+      await dispatch(login({ username, password }));
+      setUsername('');
+      setPassword('');
+      // setLoading(false);
+      navigate('/');
+    } catch (error) {
+      // setLoading(false);
+      if (!error?.originalStatus) {
+        setErrMsg(error.response?.data?.detail);
+      } else if (error.originalStatus === 400) {
+        setErrMsg(error.response?.data?.detail);
+      } else if (error.originalStatus === 401) {
+        setErrMsg(error.response?.data?.detail);
+      } else {
+        setErrMsg("Login Failed");
+      }
+      navigate("/login");
+    }
+  };
+
 
   return (
     <div>
@@ -32,11 +57,11 @@ const Login = () => {
           </Stack>  
           </div>}
         </div>
-        <form className='flex flex-col mx-auto p-5'>
+        <form onSubmit={handleSubmit} className='flex flex-col mx-auto p-5'>
           <label>Username *</label>
-          <input type='text' required name='' className='pl-1 outline-none  py-1' />
+          <input type='text' required name=''onChange={handleUsernameInput} className='pl-1 outline-none  py-1' />
           <label>Password * </label>
-          <input type={check? "text": "password"} required name=''className='pl-1 outline-none  py-1'/>
+          <input type={check? "text": "password"} onChange={handlePasswordInput} required name=''className='pl-1 outline-none  py-1'/>
           <div className='flex content-center gap-3 mb-3 '>
             <label>Show password</label>
             <input type='checkbox' checked={check} onChange={togglePasswordVisibility}/>
@@ -50,4 +75,372 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

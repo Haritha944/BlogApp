@@ -1,9 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setCategoryFilter } from '../features/blogger/bloggerSlice';
+import { selectIsAuthenticated } from '../features/authentication/authSlice';
 
 const NavBar = () => {
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    const user = useSelector(state => state.auth.user)
+
     const dispatch = useDispatch();
 
     const handleCategoryClick = ((category)=>{
@@ -27,15 +31,23 @@ const NavBar = () => {
                 <li onClick={()=> handleCategoryClick ('climate')}>Climate</li>
             </ul>
             </div>
-            <div>
-                <div className='flex gap-3 uppercase font-semibold'>
+            <div className='flex gap-3 uppercase font-semibold'>
+                {isAuthenticated ? (
+                    <div className='flex items-center gap-4'>
+                        <div className='text-sm flex gap-2'><p>Hello</p >@{user.username}</div>
+                        <button className='bg-pink-500 rounded px-3 py-2
+                     text-white font-semibold shadow shadow-pink-500'>Logout</button>
+                        </div>
+                ):(
+                    <>
                     <Link to='/login'>
                     <button className='bg-pink-500 rounded px-3 py-2
                      text-white font-semibold shadow shadow-pink-500'>LOGIN</button> </Link>
                 <Link to='/register'> <button className='bg-pink-500 rounded px-3 py-2
                      text-white font-semibold shadow shadow-pink-500'>REGISTER</button> </Link>
-                    
-                </div>
+                    </>
+                )}
+               
             </div>
             
         </nav>

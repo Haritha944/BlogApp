@@ -31,7 +31,7 @@ const Home = () => {
         </div>
     }else if(postsStatus === 'succeeded'){
         content = filteredPosts.map((post) => 
-    <BlogExcerpt key={post.id} postId={post.id} post={post}/>)
+    <BlogExcerpt key={post.id} postId={post.id} post={post} posterId = {post.owner}/>)
     }else if(postsStatus === 'failed'){
         content = <p>failed {errors}</p>
     }
